@@ -1,0 +1,32 @@
+//cores
+
+$cor-base:#222;
+$cor-secundaria:#5F1BBf;
+$cor-terciaria:rgb(63, 95, 245);
+$cor-barra:#555;
+$cor-fundo-texto:#fff;
+$cor-texto: #333;
+
+
+//gradients
+$gradiente-base-secundario:linear-gradient( to left, rgba(63,95,245,1), rgba(95,27,191,0.9));
+$gradiente-base-secundarioMoz:-moz-linear-gradient( left, rgba(63,95,245,1), rgba(95,27,191,0.9));
+$gradiente-base-secundarioIE:-webkit-linear-gradient( left, rgba(63,95,245,1), rgba(95,27,191,0.9));
+$gradiente-base-transp:linear-gradient( to left, rgba(63,95,245,0.6), rgba(95,27,191,0.6));
+
+
+
+//bordas
+$borda-fina:1px solid black;
+
+
+
+//sombras
+$sombra1: 0 0.5px 20px 0.1px black;
+$sombra2: 0 -0.5px 20px 0.1px black;
+$sombra-completa: 0 0 9px 0.4px black;
+$sombra-completa-fraca: 0 0 8px 0.3px rgba(0,0,0,0.5);
+$sombra-texto:  3px 7px 20px black;
+
+//fonts
+$font-base:'Barlow', sans-serif;

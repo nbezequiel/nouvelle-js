@@ -1,0 +1,71 @@
+
+@import "variaveis";
+.informacoes{
+    width: 65%;
+    height: 60%;
+    background:rgba(255,255,255,0.94);
+    border-radius: 10px;
+    padding: 1%;
+    box-sizing: border-box;
+    box-shadow: $sombra1;
+    display: grid;
+    grid-template-columns: 30% 15% 1fr 15%;
+    grid-template-rows: 20% 20% 20% 1fr;
+}
+
+
+.informacoes p{
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+.informacoes img{
+    width:93%;
+    height: 100%;
+    grid-row-start:1;
+    grid-row-end: 5;
+}
+.informacoes h1{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+}
+.informacoes h4{
+    grid-column-start: 2;
+}
+.informacoes .close-button{
+    width: 30%;
+    height: 30%;
+    border: none;
+    background: $gradiente-base-secundario;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    justify-self: flex-end;
+    grid-column-start: 4;
+}
+
+.informacoes .btn{
+    grid-column-start: 3;
+    width: 90%;
+    height: 30px;
+    justify-self: end;
+    align-self: end;
+    color: $cor-fundo-texto;
+    grid-column-start: 4;
+    font-size: 1em;
+    border-radius:8px;
+    border: none;
+}
+.info-box{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.0);
+    z-index: 100;
+    top:0%;
+    left: 0%;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    box-sizing: border-box;
+}

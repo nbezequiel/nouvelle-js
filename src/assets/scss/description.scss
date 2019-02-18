@@ -1,0 +1,57 @@
+@import "variaveis";
+[ms-main-comment]{ 
+    display: flex;
+    justify-content: center;
+    padding: 3% 10%;
+    background: linear-gradient(to right,#bbb,#ddd);
+    background-blend-mode: multiply;
+}
+[ms-main-comment] article{
+    width: 90%;
+    background: rgb(255, 255, 255);
+    padding: 3% 5%; 
+    border-radius: 10px;
+    box-shadow: $sombra-completa-fraca;
+}
+[ms-main-comment] header{
+    width: 100%;
+    background: url("../imgs/header.jpg"),rgba(0,0,0,0.7);
+    background-blend-mode: multiply;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 8% 4%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: $cor-fundo-texto;
+}
+[ms-main-comment] h1{
+    font-size:4em;
+}
+[ms-main-comment] h5{
+    font-size:1.1em;
+}
+
+[ms-main-comment] main{
+    padding: 3% 1%;
+    font-size: 1.1em;
+}
+[ms-main-comment] main p{
+    text-indent: 2.5em;
+}
+[ms-main-comment] main p:first-child:first-letter{
+    font-weight: bold;
+    font-size:1.3em;
+}
+[ms-main-comment] footer{
+    display: flex;
+    flex-direction: column;
+}
+[ms-main-comment] h3{
+    display: block;
+    align-self: flex-end;
+    width: 20%;
+}
+[ms-main-comment] h6{
+    font-size: 1.05em;
+}

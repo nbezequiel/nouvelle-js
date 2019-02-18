@@ -1,0 +1,45 @@
+@import "variaveis";
+
+#menu {
+    ul{
+        width: 40%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size:30px;
+        height: 100%;
+    }
+}
+
+#menu{
+    [logo-menu]{
+        width: 200px;
+        height: 100%;
+        background-color: #ccc;
+    }
+    .profile-pic{
+        width:60px;
+        height: 60px;
+        border-radius:50px;
+    }
+}
+
+#menu{
+    li{
+        height: 100%;;
+      }
+}
+#menu ul{
+    a{
+        display: flex;
+        height: 90%;
+        color:$cor-texto;
+        align-items: center;
+    }   
+}
+#menu ul{
+    a:hover{
+        border-bottom: 3px solid rgb(86, 9, 209);
+    }   
+}
+

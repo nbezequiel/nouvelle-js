@@ -1,0 +1,24 @@
+@import "variaveis";
+
+#cabecalho{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+} 
+#cabecalho div{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $cor-fundo-texto;
+}
+#cabecalho div h1{
+    font-size: 50px;
+    margin-bottom: 16px;
+    justify-self: center;
+}
+
+#cabecalho div p{
+    font-size: 23px;
+}

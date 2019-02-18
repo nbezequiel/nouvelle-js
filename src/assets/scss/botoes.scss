@@ -1,0 +1,15 @@
+@import "variaveis";
+.btn{
+    background:$gradiente-base-secundario;
+    background:$gradiente-base-secundarioIE;
+    background:$gradiente-base-secundarioMoz;
+    height: 80%;
+    width: 140px;
+    display: flex;
+    font-size: 23px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: $sombra-completa-fraca;
+    
+}

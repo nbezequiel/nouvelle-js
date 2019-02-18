@@ -1,0 +1,72 @@
+[
+    {
+        "id":1,
+        "titulo":"Pantera Negra",
+        "ano":1995,
+        "atores":"Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o.",
+        "diretores":"Ryan Coogler",
+        "descricao":"Black Panther (no Brasil, Pantera Negra) é um filme de super-herói estadunidense.",
+        "resenha":"Após a morte do rei T'Chaka (John Kani), o príncipe T'Challa (Chadwick Boseman) retorna a Wakanda para a cerimônia de coroação. Nela são reunidas as cinco tribos que compõem o reino, sendo que uma delas, os Jabari, não apoia o atual governo. T'Challa logo recebe o apoio de Okoye (Danai Gurira), a chefe da guarda de Wakanda, da irmã Shuri (Letitia Wright), que coordena a área tecnológica do reino, e também de Nakia (Lupita Nyong'o), a grande paixão do atual Pantera Negra, que não quer se tornar rainha. Juntos, eles estão à procura de Ulysses Klaue (Andy Serkis), que roubou de Wakanda um punhado de vibranium, alguns anos atrás.",
+        "imagem":"url('assets/imgs/blackpantherP.jpg')",
+        "comentarios":[
+            {
+                "id":1,
+                "fotoperfil":"url da foto de perfil",
+                "nome":"membro1",
+                "commentario":"algum comentario sobre o filme"
+            },{
+                "id":10,
+                "fotoperfil":"url da foto de perfil",
+                "nome":"membro10",
+                "commentario":"algum comentario sobre o filme"
+            },{
+                "id":21,
+                "fotoperfil":"url da foto de perfil",
+                "nome":"membro21",
+                "commentario":"algum comentario sobre o filme"
+            }],
+        "avaliacoes":[
+            {
+                "id":1,
+                "nome":"membro1",
+                "nivelavaliacao":5
+            }
+        ]
+    
+    },
+    {
+        "id":2,
+        "titulo":"Aquaman",
+        "ano":1996,
+        "atores":" Jason Momoa, Amber Heard, Willem Dafoe.",
+        "diretores":"James Wan",
+        "descricao":"Aquaman é um filme norte-americano de 2018, baseado no personagem homônimo da DC Comics.",
+        "resenha":"Filho do humano Tom Curry (Temuera Morrison) com a atlante Atlanna (Nicole Kidman), Arthur Curry (Jason Momoa) cresce com a vivência de um humano e as capacidades metahumanas de um atlante. Quando seu irmão Orm (Patrick Wilson) deseja se tornar o Mestre dos Oceanos, subjugando os demais reinos aquáticos para que possa atacar a superfície, cabe a Arthur a tarefa de impedir a guerra iminente. Para tanto, ele recebe a ajuda de Mera (Amber Heard), princesa de um dos reinos, e o apoio de Vulko (Willem Dafoe), que o treinou secretamente desde a adolescência.",
+        "imagem":"url('assets/imgs/aquamanP.jpg')",
+        "comentarios":[
+            {
+                "id":1,
+                "fotoperfil":"url da foto de perfil",
+                "nome":"membro1",
+                "commentario":"algum comentario sobre o filme"
+            },{
+                "id":10,
+                "fotoperfil":"url da foto de perfil",
+                "nome":"membro10",
+                "commentario":"algum comentario sobre o filme"
+            },{
+                "id":21,
+                "fotoperfil":"url da foto de perfil",
+                "nome":"membro21",
+                "commentario":"algum comentario sobre o filme"
+            }],
+        "avaliacoes":[
+            {
+                "id":1,
+                "nome":"membro1",
+                "nivelavaliacao":5
+            }
+        ]
+    
+    }
+]

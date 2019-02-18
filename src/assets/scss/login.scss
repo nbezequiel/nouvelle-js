@@ -1,0 +1,89 @@
+@import "variaveis";
+
+[ms-login]{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    background: $gradiente-base-secundario;
+}
+[ms-login] .login-box{
+    width: 35%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 20% 60% 10%;
+    padding: 4% 2% 1% 2%;
+    background: #444;
+    box-shadow: $sombra1;
+    box-sizing: border-box;
+}
+[ms-login] .login-box h1{
+    color:white;
+    font-size: 2.5em;
+    font-weight: 500;
+}
+[ms-login] .login-box form{
+    display: grid;
+    grid-template-columns: 35% 1fr;
+    grid-auto-rows: 1fr 1r 10%;
+    width: 90%;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    padding: 5% 0;
+}
+[ms-login] .login-box form button{
+    width: 70%;
+    grid-column-start: 2;
+    height: 30%;
+    align-self: center;
+    justify-self: flex-end;
+    border: none;
+    background: $gradiente-base-secundario;
+    padding: 1%;
+    border-radius: 5px;
+    color: white;
+    box-shadow: $sombra-completa-fraca;
+    font-weight: 500;
+}
+[ms-login] .login-box form input{
+    border-radius: 7px;
+    border:1px solid #ccc;
+    width: 100%;
+    height: 30%;
+    align-self: center;
+    justify-self: center;
+    padding: 1%;
+    box-sizing: border-box;
+}
+[ms-login] .login-box form label{
+    color: white;
+    font-size: 1.4em;
+    align-self: center;
+    font-weight: 500;
+}
+[ms-login] .login-box div{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+[ms-login] .login-slide {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    height: 100%;
+    justify-content: space-between;
+    padding: 4% 0;
+    box-sizing: border-box;
+}
+[ms-login] .login-slide .logo-grande{
+    width: 500px;
+    height: 200px;
+    background: #ccc;
+    align-self: center;
+    border-radius: 10px;
+
+}
+
+
