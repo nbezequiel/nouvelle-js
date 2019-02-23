@@ -178,6 +178,9 @@ function ajaxPages(){
         if(location.hash=="#/main.html"){
            carregaPrimeirosPosts(); 
         }
+        else if(location.hash=="#/others.html"){
+            fillAllMovies();
+        }
     })  
     setTimeout(() => {
        trocaListaDeFilmes()     

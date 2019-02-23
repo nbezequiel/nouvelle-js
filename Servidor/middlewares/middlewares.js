@@ -44,6 +44,23 @@ module.exports={
                 resp.send('{"Error":"error"}')
             }
         })
+    },
+    getAllPosts:function(req,resp){
+        let page= req.params.page
+        let postsToSend=false
+
+        fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
+            const posts=JSON.parse(data)
+            posts.forEach(item=> {
+               
+            }); 
+            if(postsToSend){
+                resp.send(JSON.stringify(postsToSend))
+            }
+            else{
+                resp.send('{"Error":"error"}')
+            }
+        })
     }
 }
 

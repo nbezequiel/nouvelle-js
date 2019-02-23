@@ -158,3 +158,33 @@ function getPosts(){
     })
 }
 
+
+
+function getAllPosts(page){   
+    console.log(page) 
+    return new Promise((resolve,reject)=>{
+        fetch(`/lastposts/${page}`)
+        .then(res=>res.json())
+            .then(resp=>{
+                if(resp==undefined){
+                    reject("erro");return;
+                }
+                else{
+                    resolve(resp)
+                }
+            }) 
+    })
+}
+function fillAllMovies(e){
+    if(e){
+        let elem=e.target;
+        getAllPosts(elem.getAttribute("id"))
+            .then()
+    }
+    else{
+        getAllPosts(String(0))
+    }
+}
+
+
+$(document).on("change",".pagina-filmes",fillAllMovies)
