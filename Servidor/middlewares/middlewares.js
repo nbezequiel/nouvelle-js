@@ -2,6 +2,7 @@ const express=require("express")
 const fs=require("fs")
 
 module.exports={
+    //--- Valida se usuário e a senha recebida condizem com o disponível no arquivo de usuários.
     makeLogin:function(req,resp){
         fs.readFile("./users/users.json","utf-8",(err,data)=>{
             const users=JSON.parse(data)
@@ -19,6 +20,7 @@ module.exports={
         })
         
     },
+    //--- Retorna os 8 principais posts que ficaram na página principal.
     getLastPosts:function(req,resp){
         fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
             const posts=JSON.parse(data)
@@ -26,7 +28,8 @@ module.exports={
             resp.send(JSON.stringify(postsToSend))
         })
     },
-    getLastPosts2:function(req,resp){
+    //--- Retorna as informações de uma postagem a serem exibidas ao cliente
+    getPostInfo:function(req,resp){
         let idReq= req.params.id
         let postsToSend=false
 
@@ -45,15 +48,14 @@ module.exports={
             }
         })
     },
+    //--- Retorna todos os posts disponiveis de acordo com a pagina do catálogo que o usuário está navegando.
     getAllPosts:function(req,resp){
         let page= req.params.page
-        let postsToSend=false
+        let postsToSend;
 
         fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
             const posts=JSON.parse(data)
-            posts.forEach(item=> {
-               
-            }); 
+            postsToSend=posts.slice(page,page+7)
             if(postsToSend){
                 resp.send(JSON.stringify(postsToSend))
             }

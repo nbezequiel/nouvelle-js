@@ -8,6 +8,7 @@ const port=8888
 
 app.use(express.static("../build"))
 app.use(bodyParser.urlencoded({extended:true}))
+
 require("./rotas/routs")(app)
 
 
