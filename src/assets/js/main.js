@@ -72,7 +72,7 @@ let sectionUser=false;
 /** Tentar substituir por algo mais efetivo ou funcional*/
 function ajaxPages(){
     $(document).ready(function(){
-        
+        $(document).on('click', '.mainMovie', abrirInformacoes)
         $(document).on('click', '.movie', abrirInformacoes)
         $(document).on("change","[ms-other-search] .pagina-filmes",trocaListaDeFilmes)    
         trocaListaDeFilmes()

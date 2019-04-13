@@ -5,244 +5,6 @@ $(".avaliacao").click(function (e) {});
 "use strict";
 "use strict";
 
-function getPosts() {
-    return new Promise(function (resolve, reject) {
-        fetch("/lastposts").then(function (res) {
-            return res.json();
-        }).then(function (resp) {
-            if (resp == undefined) {
-                reject("erro");return;
-            } else {
-                resolve(resp);
-            }
-        });
-    });
-}
-
-function carregaPrimeirosPosts() {
-    getPosts().then(function (resp) {
-        var elementos = document.querySelectorAll(".mainmovie div");
-        for (var i = 0; i < 8; i++) {
-            try {
-                elementos[i].parentElement.setAttribute("id", resp[i].id);
-                elementos[i].firstElementChild.innerHTML = resp[i].titulo;
-                elementos[i].lastElementChild.innerHTML = resp[i].descricao;
-                elementos[i].parentElement.style.backgroundImage = resp[i].imagem;
-            } catch (err) {}
-        }
-    });
-}
-
-function getAllPosts(page) {
-    console.log(page);
-    return new Promise(function (resolve, reject) {
-        fetch("/allposts/" + page).then(function (res) {
-            return res.json();
-        }).then(function (resp) {
-            if (resp == undefined) {
-                reject("erro");return;
-            } else {
-                resolve(resp);
-            }
-        });
-    });
-}
-
-function fillAllMovies(e) {
-    if (e) {
-        var elem = e.target;
-        getAllPosts(elem.getAttribute("id")).then(function (resp) {
-            var movies = document.querySelectorAll(".movie");
-        });
-    } else {
-        getAllPosts(String(0)).then(function (resp) {
-            var movies = document.querySelectorAll(".movie");
-        });
-    }
-}
-
-function abrirInformacoes(e) {
-    getInfo(e.target.parentElement.getAttribute("id")).then(function (resp) {
-        var id = resp.id;
-        var titulo = resp.titulo;
-        var img = resp.imagem.substr(16).replace("')", "");
-        var atores = resp.atores;
-        var diretores = resp.diretores;
-        var resenha = resp.resenha.substr(0, 200) + "...";
-
-        $(".info-box .informacoes h1").html(titulo);
-        $(".info-box .informacoes img").attr("src", "assets/imgs" + img);
-        $(".info-box .informacoes [atores]").html(atores);
-        $(".info-box .informacoes [diretores]").html(diretores);
-        $(".info-box .informacoes [resenha]").html(resenha);
-        $(".info-box .informacoes").attr("id", id);
-
-        var abrirInfo = function abrirInfo() {
-            return $(".info-box").fadeIn(600).css("display", "flex");
-        };
-        var fecharInfo = function fecharInfo() {
-            return $(".info-box").fadeOut(600);
-        };
-
-        $("[fechar-box-info]").click(fecharInfo);
-        document.querySelector(".info-box .btn").onclick = function (e) {
-            return abrePost(e);
-        };
-
-        abrirInfo();
-    });
-}
-
-function abrePost(e) {
-    e.preventDefault();
-    location.hash = "#/description.html";
-    $(".info-box").fadeOut(600);
-    var id = e.target.parentElement.getAttribute("id");
-    $(document).ready(function () {
-        getInfo(id).then(function (resp) {
-            var titulo = resp.titulo;
-            var descricao = resp.descricao;
-            var resenha = resp.resenha;
-            $("[post] h1").html(titulo);
-            $("[post] h5").html(descricao);
-            $("[post] main").html(resenha);
-        });
-    });
-}
-
-function carregaComentariosPost(post) {}
-
-function getInfo(id) {
-    return new Promise(function (resolve, reject) {
-        fetch("/lastposts/" + id).then(function (res) {
-            return res.json();
-        }).then(function (resp) {
-            if (resp == undefined) {
-                reject("erro");return;
-            } else {
-                resolve(resp);
-            }
-        });
-    });
-}
-
-function trocaListaDeFilmes(elem) {
-    var pagina = "0";
-    if (elem) {
-        pagina = elem.target.id;
-    }
-
-    var filmes = [[{
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }, {
-        nome: "Filmes1",
-        img: "url('assets/imgs/blackpantherP.jpg')"
-    }], [{
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }, {
-        nome: "Filmes2",
-        img: "url('assets/imgs/getoutP.jpg')"
-    }]];
-
-    var allfilmes = $("[ms-other-movies] .movie");
-
-    allfilmes.each(function (i, e) {
-
-        e.style.doisplay = "flex";
-        var movie = filmes[pagina][i];
-        if (movie) {
-
-            e.style.display = "block";
-            e.style.backgroundImage = movie.img;
-        } else {
-            e.style.display = "none";
-        }
-    });
-}
-
-$(document).on("change", ".pagina-filmes", fillAllMovies);
-"use strict";
-
 var validaUser = function validaUser() {
     var user = lerCookie("user");
     var pass = lerCookie("pass");
@@ -377,7 +139,7 @@ var sectionUser = false;
 
 function ajaxPages() {
     $(document).ready(function () {
-
+        $(document).on('click', '.mainMovie', abrirInformacoes);
         $(document).on('click', '.movie', abrirInformacoes);
         $(document).on("change", "[ms-other-search] .pagina-filmes", trocaListaDeFilmes);
         trocaListaDeFilmes();
@@ -398,5 +160,187 @@ function ajaxPages() {
 
 sectionUser == false ? validaUser() : window.location.hash = "#/main.html";
 location.hash = "#/main.html";
+"use strict";
+
+function getPosts() {
+    return new Promise(function (resolve, reject) {
+        fetch("/lastposts").then(function (res) {
+            return res.json();
+        }).then(function (resp) {
+            if (resp == undefined) {
+                reject("erro");return;
+            } else {
+                resolve(resp);
+            }
+        });
+    });
+}
+
+function carregaPrimeirosPosts() {
+    getPosts().then(function (resp) {
+        var elementos = document.querySelectorAll(".mainmovie div");
+        for (var i = 0; i < 8; i++) {
+            try {
+                elementos[i].parentElement.setAttribute("id", resp[i].id);
+                elementos[i].firstElementChild.innerHTML = resp[i].titulo;
+                elementos[i].lastElementChild.innerHTML = resp[i].descricao;
+                elementos[i].parentElement.style.backgroundImage = resp[i].imagem;
+            } catch (err) {}
+        }
+    });
+    fillMainMovieAndSerie().then(function (resp) {
+        var posters = document.querySelectorAll("section");
+        for (var i = 0; i < 2; i++) {
+
+            var img = resp[i].imagem.replace("url(\'", "").replace("\')", "");
+            posters[i + 1].firstElementChild.innerHTML = resp[i].titulo;
+            posters[i + 1].children[1].setAttribute("src", "" + img);
+            posters[i + 1].setAttribute("id", resp[i].id);
+            var comentarios = document.querySelectorAll("." + posters[i + 1].className + " .comentario");
+            try {
+                for (var j = 0; j < comentarios.length; j++) {
+                    comentarios[j].firstElementChild.innerHTML = resp[i].comentarios[j].nome;
+                    comentarios[j].lastElementChild.innerHTML = resp[i].comentarios[j].commentario;
+                    comentarios[j].previousElementSibling.setAttribute("src", "" + resp[i].comentarios[j].fotoperfil);
+                }
+            } catch (err) {}
+        }
+    });
+}
+
+function getAllPosts(page) {
+    console.log(page);
+    return new Promise(function (resolve, reject) {
+        fetch("/allposts/" + page).then(function (res) {
+            return res.json();
+        }).then(function (resp) {
+            if (resp == undefined) {
+                reject("erro");return;
+            } else {
+                resolve(resp);
+            }
+        });
+    });
+}
+
+function fillAllMovies(e) {
+    if (e) {
+        var elem = e.target;
+        getAllPosts(elem.getAttribute("id")).then(function (resp) {
+            var movies = document.querySelectorAll(".movie");
+        });
+    } else {
+        getAllPosts(String(0)).then(function (resp) {
+            var movies = document.querySelectorAll(".movie");
+        });
+    }
+}
+
+function abrirInformacoes(e) {
+    getInfo(e.target.parentElement.getAttribute("id")).then(function (resp) {
+        var id = resp.id;
+        var titulo = resp.titulo;
+        var img = resp.imagem.substr(16).replace("')", "");
+        var atores = resp.atores;
+        var diretores = resp.diretores;
+        var resenha = resp.resenha.substr(0, 200) + "...";
+
+        $(".info-box .informacoes h1").html(titulo);
+        $(".info-box .informacoes img").attr("src", "assets/imgs" + img);
+        $(".info-box .informacoes [atores]").html(atores);
+        $(".info-box .informacoes [diretores]").html(diretores);
+        $(".info-box .informacoes [resenha]").html(resenha);
+        $(".info-box .informacoes").attr("id", id);
+
+        var abrirInfo = function abrirInfo() {
+            return $(".info-box").fadeIn(600).css("display", "flex");
+        };
+        var fecharInfo = function fecharInfo() {
+            return $(".info-box").fadeOut(600);
+        };
+
+        $("[fechar-box-info]").click(fecharInfo);
+        document.querySelector(".info-box .btn").onclick = function (e) {
+            return abrePost(e);
+        };
+
+        abrirInfo();
+    });
+}
+
+function abrePost(e) {
+    e.preventDefault();
+    location.hash = "#/description.html";
+    $(".info-box").fadeOut(600);
+    var id = e.target.parentElement.getAttribute("id");
+    $(document).ready(function () {
+        getInfo(id).then(function (resp) {
+            var titulo = resp.titulo;
+            var descricao = resp.descricao;
+            var resenha = resp.resenha;
+            $("[post] h1").html(titulo);
+            $("[post] h5").html(descricao);
+            $("[post] main").html(resenha);
+        });
+    });
+}
+
+function carregaComentariosPost(post) {}
+
+function getInfo(id) {
+    return new Promise(function (resolve, reject) {
+        fetch("/lastposts/" + id).then(function (res) {
+            return res.json();
+        }).then(function (resp) {
+            if (resp == undefined) {
+                reject("erro");return;
+            } else {
+                resolve(resp);
+            }
+        });
+    });
+}
+
+function trocaListaDeFilmes(elem) {
+    var pagina = "0";
+    if (elem) {
+        pagina = elem.target.id;
+    }
+
+    fetch("/getPage/" + pagina).then(function (resp) {
+        return resp.json();
+    }).then(function (filmes) {
+        var allfilmes = $("[ms-other-movies] .movie");
+
+        allfilmes.each(function (i, e) {
+
+            e.style.doisplay = "flex";
+            var movie = filmes[i];
+            console.log(movie);
+            if (movie) {
+                e.style.display = "block";
+                e.style.backgroundImage = movie.img;
+            } else {
+                e.style.display = "none";
+            }
+        });
+    });
+}
+
+function fillMainMovieAndSerie() {
+    return new Promise(function (resolve, reject) {
+        fetch("/mainmovieserie").then(function (res) {
+            return res.json();
+        }).then(function (resp) {
+            if (resp == undefined) {
+                reject("erro");return;
+            } else {
+                resolve(resp);
+            }
+        });
+    });
+}
+
+$(document).on("change", ".pagina-filmes", fillAllMovies);
 "use strict";
 "use strict";

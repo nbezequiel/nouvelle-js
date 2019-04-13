@@ -11,17 +11,17 @@
         "comentarios":[
             {
                 "id":1,
-                "fotoperfil":"url da foto de perfil",
+                "fotoperfil":"assets/imgs/blackpantherP.jpg",
                 "nome":"membro1",
-                "commentario":"algum comentario sobre o filme"
+                "commentario":"21893718"
             },{
                 "id":10,
-                "fotoperfil":"url da foto de perfil",
+                "fotoperfil":"assets/imgs/blackpantherP.jpg",
                 "nome":"membro10",
                 "commentario":"algum comentario sobre o filme"
             },{
                 "id":21,
-                "fotoperfil":"url da foto de perfil",
+                "fotoperfil":"assets/imgs/blackpantherP.jpg",
                 "nome":"membro21",
                 "commentario":"algum comentario sobre o filme"
             }],
@@ -46,17 +46,17 @@
         "comentarios":[
             {
                 "id":1,
-                "fotoperfil":"url da foto de perfil",
-                "nome":"membro1",
-                "commentario":"algum comentario sobre o filme"
+                "fotoperfil":"assets/imgs/blackpantherP.jpg",
+                "nome":"Membro 1 ",
+                "commentario":"Este é um bom filme"
             },{
                 "id":10,
-                "fotoperfil":"url da foto de perfil",
+                "fotoperfil":"assets/imgs/blackpantherP.jpg",
                 "nome":"membro10",
                 "commentario":"algum comentario sobre o filme"
             },{
                 "id":21,
-                "fotoperfil":"url da foto de perfil",
+                "fotoperfil":"assets/imgs/blackpantherP.jpg",
                 "nome":"membro21",
                 "commentario":"algum comentario sobre o filme"
             }],

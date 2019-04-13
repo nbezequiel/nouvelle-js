@@ -1,3 +1,5 @@
+
+
 /*
 ** Preenchimento de campos de exibição de filmes e informações dos mesmos
 */
@@ -36,6 +38,29 @@ function carregaPrimeirosPosts(){
              }
          }
     })
+    fillMainMovieAndSerie()
+        .then(resp=>{
+            let posters=document.querySelectorAll("section")
+            for(let i=0;i<2;i++){
+
+                let img=resp[i].imagem.replace("url(\'","").replace("\')","")
+                posters[i+1].firstElementChild.innerHTML=resp[i].titulo
+                posters[i+1].children[1].setAttribute("src",`${img}`)
+                posters[i+1].setAttribute("id",resp[i].id)
+                let comentarios=document.querySelectorAll(`.${posters[i+1].className} .comentario`)
+                try{
+                    for(let j=0;j<comentarios.length;j++){
+                        comentarios[j].firstElementChild.innerHTML=resp[i].comentarios[j].nome;
+                        comentarios[j].lastElementChild.innerHTML=resp[i].comentarios[j].commentario;
+                        comentarios[j].previousElementSibling.setAttribute("src",`${resp[i].comentarios[j].fotoperfil}`);
+                    }
+                }
+                catch(err){
+
+                }
+            }
+        })  
+        
 }
 
 //**Pega quase 'todos' os posts(tem um limite definido na API) disponiveis no servidor */
@@ -153,121 +178,42 @@ function trocaListaDeFilmes(elem){
     }
 
     
-    //busca no banco por esta parte de fimes e troca
-    //simulacao
-    const filmes=[
-        [{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        },{
-            nome:"Filmes1",
-            img:"url('assets/imgs/blackpantherP.jpg')"
-        }],[{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        },{
-            nome:"Filmes2",
-            img:"url('assets/imgs/getoutP.jpg')"
-        }]
-    ]
+    fetch(`/getPage/${pagina}`)
+    .then(resp=>resp.json())
+    .then(filmes=>{
+        const allfilmes=$("[ms-other-movies] .movie")
+        
+        allfilmes.each((i,e)=>{
 
-    const allfilmes=$("[ms-other-movies] .movie")
-    
-    allfilmes.each((i,e)=>{
-
-        e.style.doisplay="flex"
-        const movie=filmes[pagina][i]
-        if(movie){
-
-            e.style.display="block"
-            e.style.backgroundImage= movie.img
-        }
-        else{
-            e.style.display="none"
-        }
+            e.style.doisplay="flex"
+            const movie=filmes[i]
+            console.log(movie)
+            if(movie){
+                e.style.display="block"
+                e.style.backgroundImage= movie.img
+            }
+            else{
+                e.style.display="none"
+            }
+        })
     })
-    
 }
 
-
+/**Preencher o principal filme e série do mês */
+function fillMainMovieAndSerie(){    
+    return new Promise((resolve,reject)=>{
+        fetch(`/mainmovieserie` )
+        .then(res=>res.json())
+            .then(resp=>{  
+                if(resp==undefined){
+                    reject("erro");return;
+                }
+                else{
+                    resolve(resp)
+                }
+            }) 
+    })
+}
 
 /** A cada troca de página no catálogo de filmes a função de atualização e preenchimento é chamada */
-$(document).on("change",".pagina-filmes",fillAllMovies)
+ $(document).on("change",".pagina-filmes",fillAllMovies)

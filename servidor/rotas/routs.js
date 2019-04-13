@@ -7,6 +7,8 @@ module.exports=function(app){
     app.post("/makelogin",middlewares.makeLogin),
     app.get("/lastposts",middlewares.getLastPosts),
     app.get("/lastposts/:id",middlewares.getPostInfo),
-    app.get("/allposts/:page",middlewares.getAllPosts)
+    app.get("/allposts/:page",middlewares.getAllPosts),
+    app.get("/mainmovieserie",middlewares.getMainMovieSerie)
+    app.get("/getPage/:pagina",middlewares.getPageOfMovies)
 }
 

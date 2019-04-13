@@ -1,4 +1,4 @@
-const express=require("express")
+
 const fs=require("fs")
 
 module.exports={
@@ -18,7 +18,6 @@ module.exports={
             }
             
         })
-        
     },
     //--- Retorna os 8 principais posts que ficaram na página principal.
     getLastPosts:function(req,resp){
@@ -61,6 +60,29 @@ module.exports={
             }
             else{
                 resp.send('{"Error":"error"}')
+            }
+        })
+    },
+    getMainMovieSerie:function(req,resp){
+        fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
+            if(err){
+                resp.send("erro")
+            } else{
+                posts=JSON.parse(data);
+                let postsToSend=posts.slice(0,2)
+                resp.send(postsToSend)
+            }
+        })
+    },
+    getPageOfMovies:function(req,resp){
+        console.log(req.params)
+        fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
+            if(err){
+                resp.send("erro")
+            } else{
+                posts=JSON.parse(data);
+                let postsToSend=posts.slice(0,2)
+                resp.send(postsToSend)
             }
         })
     }
