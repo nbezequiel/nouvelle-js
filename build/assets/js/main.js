@@ -78,90 +78,6 @@ var UserLoggedPage = function UserLoggedPage() {
 };
 "use strict";
 
-var sectionUser = false;
-
-(function () {
-
-    function reduzHeader(hash) {
-        var cabecalho = document.querySelector("#cabecalho");
-        var menu = document.querySelector("#menu");
-        var rodape = document.querySelector("#rodape");
-        var conteudo = document.querySelector("#conteudo");
-        var docs = document.querySelectorAll("body,html");
-
-        if (hash == "#/login.html") {
-            cabecalho.style.display = "none";
-            rodape.style.display = "none";
-            menu.style.display = "none";
-            conteudo.style.height = "100%";
-            docs[1].style.padding = "0";
-            docs[0].style.padding = "0";
-        } else {
-            cabecalho.style.display = "flex";
-            menu.style.display = "flex";
-            rodape.style.display = "grid";
-            docs[1].style.paddingTop = "0";
-            conteudo.style.height = "auto";
-            docs[0].style.paddingTop = "0";
-        }
-        if (hash != "#/main.html") {
-            cabecalho.style.height = "45%";
-        } else {
-            cabecalho.style.height = "70%";
-        }
-    }
-    function trocarPagina(hash) {
-        reduzHeader(hash);
-
-        var conteudo = document.querySelector("#conteudo");
-        var navegarUrl = hash.substring(1);
-        fetch(navegarUrl).then(function (resp) {
-            return resp.text();
-        }).then(function (html) {
-            conteudo.innerHTML = html;
-        });
-        ajaxPages();
-    }
-    function iniciaSite() {
-        if (location.hash) {
-            trocarPagina(location.hash);
-        } else {
-            var inicial = "#/main.html";
-            location.pathname == "/login.html" ? null : trocarPagina(inicial);
-        }
-    }
-
-    window.onhashchange = function (e) {
-        return trocarPagina(location.hash);
-    };
-    iniciaSite();
-})();
-
-function ajaxPages() {
-    $(document).ready(function () {
-        $(document).on('click', '.mainMovie', abrirInformacoes);
-        $(document).on('click', '.movie', abrirInformacoes);
-        $(document).on("change", "[ms-other-search] .pagina-filmes", trocaListaDeFilmes);
-        trocaListaDeFilmes();
-
-        $(document).on("click", ".avaliacao", function (e) {
-            return $(e.target).css("background-color", "white");
-        });
-        if (location.hash == "#/main.html") {
-            carregaPrimeirosPosts();
-        } else if (location.hash == "#/others.html") {
-            fillAllMovies();
-        }
-    });
-    setTimeout(function () {
-        trocaListaDeFilmes();
-    }, 300);
-}
-
-sectionUser == false ? validaUser() : window.location.hash = "#/main.html";
-location.hash = "#/main.html";
-"use strict";
-
 function getPosts() {
     return new Promise(function (resolve, reject) {
         fetch("/lastposts").then(function (res) {
@@ -179,7 +95,7 @@ function getPosts() {
 function carregaPrimeirosPosts() {
     getPosts().then(function (resp) {
         var elementos = document.querySelectorAll(".mainmovie div");
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 9; i++) {
             try {
                 elementos[i].parentElement.setAttribute("id", resp[i].id);
                 elementos[i].firstElementChild.innerHTML = resp[i].titulo;
@@ -281,7 +197,32 @@ function abrePost(e) {
             $("[post] h1").html(titulo);
             $("[post] h5").html(descricao);
             $("[post] main").html(resenha);
+
+            adicionaComentarios(resp.comentarios);
+            var rating = calculaRating(resp.avaliacoes);
+            preencheRating(rating);
         });
+    });
+}
+function adicionaComentarios(comentarios) {
+    comentarios.forEach(function (comment) {
+        $(".comentarios").append("<article id=\"" + comment.id + "\">\n        <img class=\"profile-pic other\" src=\"" + comment.fotoperfil + "\" alt=\"\">\n        <p class=\"nome\">" + comment.nome + "</p>\n        <p>" + comment.commentario + "</p>\n        <div class=\"avaliacao-box\">\n            <button class=\"avaliacao\"></button>\n            <button class=\"avaliacao\"></button>\n        </div>\n    </article>");
+    });
+}
+function calculaRating(avaliacoes) {
+    var objRating = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0, sum: 0 };
+    avaliacoes.forEach(function (aval) {
+        objRating[aval.nivel] += 1;
+        objRating.sum += 1;
+    });
+    return objRating;
+}
+
+function preencheRating(rating) {
+    $(".aval-progress").each(function (i, barra) {
+        var porcentBarra = rating[5 - i] * 100 / rating.sum;
+        $(barra).css("width", porcentBarra + "%");
+        $(barra).after($("<h4 class=\"percent\">" + porcentBarra.toFixed(2) + "%</h4>"));
     });
 }
 
@@ -310,18 +251,18 @@ function trocaListaDeFilmes(elem) {
     fetch("/getPage/" + pagina).then(function (resp) {
         return resp.json();
     }).then(function (filmes) {
+
         var allfilmes = $("[ms-other-movies] .movie");
-
         allfilmes.each(function (i, e) {
-
             e.style.doisplay = "flex";
             var movie = filmes[i];
-            console.log(movie);
+
             if (movie) {
-                e.style.display = "block";
-                e.style.backgroundImage = movie.img;
+                e.parentNode.style.display = "block";
+                e.parentNode.setAttribute("id", movie.id);
+                e.style.backgroundImage = movie.imagem;
             } else {
-                e.style.display = "none";
+                e.parentElement.style.display = "none";
             }
         });
     });
@@ -343,4 +284,88 @@ function fillMainMovieAndSerie() {
 
 $(document).on("change", ".pagina-filmes", fillAllMovies);
 "use strict";
+"use strict";
+
+var sectionUser = false;
+
+(function () {
+
+    function reduzHeader(hash) {
+        var cabecalho = document.querySelector("#cabecalho");
+        var menu = document.querySelector("#menu");
+        var rodape = document.querySelector("#rodape");
+        var conteudo = document.querySelector("#conteudo");
+        var docs = document.querySelectorAll("body,html");
+
+        if (hash == "#/login.html") {
+            cabecalho.style.display = "none";
+            rodape.style.display = "none";
+            menu.style.display = "none";
+            conteudo.style.height = "100%";
+            docs[1].style.padding = "0";
+            docs[0].style.padding = "0";
+        } else {
+            cabecalho.style.display = "flex";
+            menu.style.display = "flex";
+            rodape.style.display = "grid";
+            docs[1].style.paddingTop = "0";
+            conteudo.style.height = "auto";
+            docs[0].style.paddingTop = "0";
+        }
+        if (hash != "#/main.html") {
+            cabecalho.style.height = "45%";
+        } else {
+            cabecalho.style.height = "70%";
+        }
+    }
+    function trocarPagina(hash) {
+        reduzHeader(hash);
+
+        var conteudo = document.querySelector("#conteudo");
+        var navegarUrl = hash.substring(1);
+        fetch(navegarUrl).then(function (resp) {
+            return resp.text();
+        }).then(function (html) {
+            conteudo.innerHTML = html;
+        });
+        ajaxPages();
+    }
+    function iniciaSite() {
+        if (location.hash) {
+            trocarPagina(location.hash);
+        } else {
+            var inicial = "#/main.html";
+            location.pathname == "/login.html" ? null : trocarPagina(inicial);
+        }
+    }
+
+    window.onhashchange = function (e) {
+        return trocarPagina(location.hash);
+    };
+    iniciaSite();
+})();
+
+function ajaxPages() {
+    $(document).ready(function () {
+        $(document).on('click', '.mainMovie', abrirInformacoes);
+        $(document).on('click', '.movie', abrirInformacoes);
+        $(document).on("change", "[ms-other-search] .pagina-filmes", trocaListaDeFilmes);
+        trocaListaDeFilmes();
+
+        $(document).on("click", ".avaliacao", function (e) {
+            return $(e.target).css("background-color", "white");
+        });
+        if (location.hash == "#/main.html") {
+            carregaPrimeirosPosts();
+        } else if (location.hash == "#/others.html") {
+            fillAllMovies();
+        }
+    });
+    setTimeout(function () {
+        trocaListaDeFilmes();
+    }, 300);
+}
+
+sectionUser == false ? validaUser() : window.location.hash = "#/main.html";
+location.hash = "#/main.html";
 "use strict";

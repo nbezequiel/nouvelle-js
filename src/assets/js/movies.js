@@ -26,7 +26,7 @@ function carregaPrimeirosPosts(){
     getPosts()
     .then((resp)=>{
         const elementos=document.querySelectorAll(".mainmovie div")
-         for(let i=0;i<8;i++){
+         for(let i=0;i<9;i++){
              try{
                  elementos[i].parentElement.setAttribute("id",resp[i].id)
                 elementos[i].firstElementChild.innerHTML=resp[i].titulo;
@@ -145,9 +145,43 @@ function abrePost(e){
             let resenha=resp.resenha
             $("[post] h1").html(titulo)
             $("[post] h5").html(descricao)
-            $("[post] main").html(resenha)     
+            $("[post] main").html(resenha)  
+             
+            adicionaComentarios(resp.comentarios)
+            let rating=calculaRating(resp.avaliacoes)
+            preencheRating(rating)
         })
     }) 
+}
+function adicionaComentarios(comentarios){
+    comentarios.forEach((comment)=>{
+        $(".comentarios").append(`<article id="${comment.id}">
+        <img class="profile-pic other" src="${comment.fotoperfil}" alt="">
+        <p class="nome">${comment.nome}</p>
+        <p>${comment.commentario}</p>
+        <div class="avaliacao-box">
+            <button class="avaliacao"></button>
+            <button class="avaliacao"></button>
+        </div>
+    </article>`)
+    })
+}
+function calculaRating(avaliacoes){
+    const objRating={5:0,4:0,3:0,2:0,1:0,sum:0}
+    avaliacoes.forEach(aval => {
+        objRating[aval.nivel]+=1
+        objRating.sum+=1
+    })
+    return objRating;
+}
+
+function preencheRating(rating){
+    $(".aval-progress").each((i,barra)=>{
+        let porcentBarra=(rating[5-i]*100)/rating.sum
+        $(barra).css("width",`${porcentBarra}%`)
+        $(barra).after($(`<h4 class="percent">${porcentBarra.toFixed(2)}%</h4>`))
+       
+    })
 }
 /** Função para carregar os comentários e avaliações do post em exibição para leitura */
 function carregaComentariosPost(post){
@@ -177,23 +211,21 @@ function trocaListaDeFilmes(elem){
         pagina=elem.target.id
     }
 
-    
     fetch(`/getPage/${pagina}`)
-    .then(resp=>resp.json())
-    .then(filmes=>{
+    .then(resp=>resp.json()).then(filmes=>{
+       
         const allfilmes=$("[ms-other-movies] .movie")
-        
         allfilmes.each((i,e)=>{
-
             e.style.doisplay="flex"
             const movie=filmes[i]
-            console.log(movie)
+            
             if(movie){
-                e.style.display="block"
-                e.style.backgroundImage= movie.img
+                e.parentNode.style.display="block"
+                e.parentNode.setAttribute("id",movie.id)
+                e.style.backgroundImage= movie.imagem
             }
             else{
-                e.style.display="none"
+                e.parentElement.style.display="none"
             }
         })
     })

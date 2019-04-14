@@ -65,6 +65,13 @@
 [ms-other-movies] article{
     height: 170px;
     background-size: cover;
-    display: none;
     border-radius:4px;
+    display:none;
+}
+
+[ms-other-movies] .movie{
+    height: 170px;
+    background-size: cover;
+    display: block;
+
 }

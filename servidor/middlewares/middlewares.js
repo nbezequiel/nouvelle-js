@@ -23,7 +23,7 @@ module.exports={
     getLastPosts:function(req,resp){
         fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
             const posts=JSON.parse(data)
-            const postsToSend=posts.slice(0,7)
+            const postsToSend=posts.slice(0,8)
             resp.send(JSON.stringify(postsToSend))
         })
     },
@@ -54,7 +54,7 @@ module.exports={
 
         fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
             const posts=JSON.parse(data)
-            postsToSend=posts.slice(page,page+7)
+            postsToSend=posts.slice(page,page+9)
             if(postsToSend){
                 resp.send(JSON.stringify(postsToSend))
             }
@@ -75,13 +75,13 @@ module.exports={
         })
     },
     getPageOfMovies:function(req,resp){
-        console.log(req.params)
+        
         fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
             if(err){
                 resp.send("erro")
             } else{
                 posts=JSON.parse(data);
-                let postsToSend=posts.slice(0,2)
+                let postsToSend=posts.slice(0,16)
                 resp.send(postsToSend)
             }
         })
