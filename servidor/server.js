@@ -1,7 +1,7 @@
 const express=require("express")
 const bodyParser=require("body-parser")
 const app=express()
-const port=8888
+const port=8080
 
 
 
@@ -9,7 +9,7 @@ const port=8888
 app.use(express.static("../build"))
 app.use(bodyParser.urlencoded({extended:true}))
 
-require("./rotas/routs")(app)
+require("./rotas/routes")(app)
 
 
 

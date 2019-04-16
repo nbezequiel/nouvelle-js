@@ -96,6 +96,7 @@ function fillAllMovies(e){
         })
     }
 }
+$(document).on("load","[ms-main-comment]",()=>console.log("dsadasd"))
 
 /*
 ** Retira as informações do post selecionado do servidor e adiciona ao form de informações visivel ao usuário.
@@ -122,7 +123,11 @@ function abrirInformacoes(e){
             const fecharInfo=()=>  $(".info-box").fadeOut(600)
             
             $("[fechar-box-info]").click(fecharInfo)
-            document.querySelector(".info-box .btn").onclick=e=>abrePost(e)
+            document.querySelector(".info-box .btn").onclick=elem=>{
+                location.hash=`#/movie/${id}`
+                elem.preventDefault()
+                //abrePost(id)
+            }
             
             abrirInfo() 
     })
@@ -132,25 +137,29 @@ function abrirInformacoes(e){
 ** Abre o post para leitura comentarios e avaliações.
 ** Incompleto*************************************
 */
-function abrePost(e){
-    e.preventDefault()
-    location.hash="#/description.html"
+function abrePost(id){
+   
     $(".info-box").fadeOut(600)
-    let id=e.target.parentElement.getAttribute("id")
+    
     $(document).ready(()=>{
-        getInfo(id)
+        
+        function a(){
+            getInfo(window.location.hash.split("/")[2])
         .then(resp=>{
+           
             let titulo=resp.titulo
             let descricao=resp.descricao
             let resenha=resp.resenha
             $("[post] h1").html(titulo)
             $("[post] h5").html(descricao)
             $("[post] main").html(resenha)  
-             
+            $("[post] header").css("background",`${resp.imagem}`)
             adicionaComentarios(resp.comentarios)
             let rating=calculaRating(resp.avaliacoes)
             preencheRating(rating)
         })
+        }
+        a()
     }) 
 }
 function adicionaComentarios(comentarios){
@@ -245,6 +254,10 @@ function fillMainMovieAndSerie(){
                 }
             }) 
     })
+}
+
+function avaliarFilme(){
+    
 }
 
 /** A cada troca de página no catálogo de filmes a função de atualização e preenchimento é chamada */

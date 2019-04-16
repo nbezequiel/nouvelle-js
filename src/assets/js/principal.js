@@ -47,7 +47,11 @@ let sectionUser=false;
         fetch(navegarUrl)
             .then(resp=>resp.text())
                 .then(html=>{
+                
                     conteudo.innerHTML=html
+                   
+                }).then(()=>{
+                    validaAjax()
                 })
                   ajaxPages()        
     }
@@ -66,24 +70,27 @@ let sectionUser=false;
 })()
 
 
-
-
+//valida a hash da pagina ajax carregada e carrega seus recursos js
+function validaAjax(){
+    if(location.hash.split("/")[1]=="movie"){
+        abrePost(window.location.hash.split("/")[2]);
+    }else if(location.hash=="#/main.html"){
+        carregaPrimeirosPosts(); 
+    }else if(location.hash=="#/others.html"){
+        fillAllMovies();
+    }
+}
 
 /** Tentar substituir por algo mais efetivo ou funcional*/
 function ajaxPages(){
     $(document).ready(function(){
         $(document).on('click', '.mainMovie', abrirInformacoes)
         $(document).on('click', '.movie', abrirInformacoes)
-        $(document).on("change","[ms-other-search] .pagina-filmes",trocaListaDeFilmes)    
-        trocaListaDeFilmes()
+        $(document).on("change","[ms-other-search] .pagina-filmes",trocaListaDeFilmes)  
+         
 
         $(document).on("click",".avaliacao",(e)=>$(e.target).css("background-color","white")   )
-        if(location.hash=="#/main.html"){
-           carregaPrimeirosPosts(); 
-        }
-        else if(location.hash=="#/others.html"){
-            fillAllMovies();
-        }
+        
     })  
     setTimeout(() => {
        trocaListaDeFilmes()     
@@ -92,4 +99,4 @@ function ajaxPages(){
 
 /**Valida se a variavel de sessão já foi setada. Se não valida o usuário e altera a hash de localização. */
 sectionUser==false ? validaUser(): window.location.hash="#/main.html"
-location.hash="#/main.html"
+

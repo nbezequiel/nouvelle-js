@@ -151,6 +151,9 @@ function fillAllMovies(e) {
         });
     }
 }
+$(document).on("load", "[ms-main-comment]", function () {
+    return console.log("dsadasd");
+});
 
 function abrirInformacoes(e) {
     getInfo(e.target.parentElement.getAttribute("id")).then(function (resp) {
@@ -176,32 +179,37 @@ function abrirInformacoes(e) {
         };
 
         $("[fechar-box-info]").click(fecharInfo);
-        document.querySelector(".info-box .btn").onclick = function (e) {
-            return abrePost(e);
+        document.querySelector(".info-box .btn").onclick = function (elem) {
+            location.hash = "#/movie/" + id;
+            elem.preventDefault();
         };
 
         abrirInfo();
     });
 }
 
-function abrePost(e) {
-    e.preventDefault();
-    location.hash = "#/description.html";
-    $(".info-box").fadeOut(600);
-    var id = e.target.parentElement.getAttribute("id");
-    $(document).ready(function () {
-        getInfo(id).then(function (resp) {
-            var titulo = resp.titulo;
-            var descricao = resp.descricao;
-            var resenha = resp.resenha;
-            $("[post] h1").html(titulo);
-            $("[post] h5").html(descricao);
-            $("[post] main").html(resenha);
+function abrePost(id) {
 
-            adicionaComentarios(resp.comentarios);
-            var rating = calculaRating(resp.avaliacoes);
-            preencheRating(rating);
-        });
+    $(".info-box").fadeOut(600);
+
+    $(document).ready(function () {
+
+        function a() {
+            getInfo(window.location.hash.split("/")[2]).then(function (resp) {
+
+                var titulo = resp.titulo;
+                var descricao = resp.descricao;
+                var resenha = resp.resenha;
+                $("[post] h1").html(titulo);
+                $("[post] h5").html(descricao);
+                $("[post] main").html(resenha);
+                $("[post] header").css("background", "" + resp.imagem);
+                adicionaComentarios(resp.comentarios);
+                var rating = calculaRating(resp.avaliacoes);
+                preencheRating(rating);
+            });
+        }
+        a();
     });
 }
 function adicionaComentarios(comentarios) {
@@ -282,6 +290,8 @@ function fillMainMovieAndSerie() {
     });
 }
 
+function avaliarFilme() {}
+
 $(document).on("change", ".pagina-filmes", fillAllMovies);
 "use strict";
 "use strict";
@@ -326,7 +336,10 @@ var sectionUser = false;
         fetch(navegarUrl).then(function (resp) {
             return resp.text();
         }).then(function (html) {
+
             conteudo.innerHTML = html;
+        }).then(function () {
+            validaAjax();
         });
         ajaxPages();
     }
@@ -345,21 +358,25 @@ var sectionUser = false;
     iniciaSite();
 })();
 
+function validaAjax() {
+    if (location.hash.split("/")[1] == "movie") {
+        abrePost(window.location.hash.split("/")[2]);
+    } else if (location.hash == "#/main.html") {
+        carregaPrimeirosPosts();
+    } else if (location.hash == "#/others.html") {
+        fillAllMovies();
+    }
+}
+
 function ajaxPages() {
     $(document).ready(function () {
         $(document).on('click', '.mainMovie', abrirInformacoes);
         $(document).on('click', '.movie', abrirInformacoes);
         $(document).on("change", "[ms-other-search] .pagina-filmes", trocaListaDeFilmes);
-        trocaListaDeFilmes();
 
         $(document).on("click", ".avaliacao", function (e) {
             return $(e.target).css("background-color", "white");
         });
-        if (location.hash == "#/main.html") {
-            carregaPrimeirosPosts();
-        } else if (location.hash == "#/others.html") {
-            fillAllMovies();
-        }
     });
     setTimeout(function () {
         trocaListaDeFilmes();
@@ -367,5 +384,4 @@ function ajaxPages() {
 }
 
 sectionUser == false ? validaUser() : window.location.hash = "#/main.html";
-location.hash = "#/main.html";
 "use strict";
