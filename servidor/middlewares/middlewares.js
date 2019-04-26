@@ -85,6 +85,19 @@ module.exports={
                 resp.send(postsToSend)
             }
         })
+    },
+    getMovieById:(req,resp)=>{
+        let idI=req.params.id
+        fs.readFile("./posts/posts.json","utf-8",(err,data)=>{
+            let posts=JSON.parse(data)
+            const postsToSend=posts.filter((elem)=>elem.id==idI)
+            fs.readFile("../build/description.html","utf-8",(erro,page)=>{
+                resp.send(page)
+            })
+        })
+    },
+    saveRating:(req,resp)=>{
+        
     }
 }
 

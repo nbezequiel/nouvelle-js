@@ -1,7 +1,14 @@
 "use strict";
 "use strict";
 
-$(".avaliacao").click(function (e) {});
+$(document).on("click", ".label-escolha button", adicionaAvaliacao);
+
+function adicionaAvaliacao(e) {
+    console.log(e);
+    console.log(e.target);
+    var btn = e.target.getAttribute("name");
+    console.log(btn);
+}
 "use strict";
 "use strict";
 
@@ -212,6 +219,17 @@ function abrePost(id) {
         a();
     });
 }
+
+function postarComentario(elem) {
+
+    elem.preventDefault();
+    var text = document.querySelector(".user-comment").children[1].value;
+    $(".comentarios").append("<article id=>\n        <img class=\"profile-pic other\" src=\"assets/imgs/blackpantherP.jpg\" alt=\"\">\n        <p class=\"nome\">Nome</p>\n        <p>" + text + "</p>\n        <div class=\"avaliacao-box\">\n            <button class=\"avaliacao\"></button>\n            <button class=\"avaliacao\"></button>\n        </div>\n    </article>");
+
+
+    window.location.reload();
+}
+
 function adicionaComentarios(comentarios) {
     comentarios.forEach(function (comment) {
         $(".comentarios").append("<article id=\"" + comment.id + "\">\n        <img class=\"profile-pic other\" src=\"" + comment.fotoperfil + "\" alt=\"\">\n        <p class=\"nome\">" + comment.nome + "</p>\n        <p>" + comment.commentario + "</p>\n        <div class=\"avaliacao-box\">\n            <button class=\"avaliacao\"></button>\n            <button class=\"avaliacao\"></button>\n        </div>\n    </article>");
@@ -373,6 +391,7 @@ function ajaxPages() {
         $(document).on('click', '.mainMovie', abrirInformacoes);
         $(document).on('click', '.movie', abrirInformacoes);
         $(document).on("change", "[ms-other-search] .pagina-filmes", trocaListaDeFilmes);
+        $(document).on("click", "[ms-other-comments] .btn", postarComentario);
 
         $(document).on("click", ".avaliacao", function (e) {
             return $(e.target).css("background-color", "white");

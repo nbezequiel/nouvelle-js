@@ -87,7 +87,7 @@ function ajaxPages(){
         $(document).on('click', '.mainMovie', abrirInformacoes)
         $(document).on('click', '.movie', abrirInformacoes)
         $(document).on("change","[ms-other-search] .pagina-filmes",trocaListaDeFilmes)  
-         
+        $(document).on("click","[ms-other-comments] .btn", postarComentario) 
 
         $(document).on("click",".avaliacao",(e)=>$(e.target).css("background-color","white")   )
         

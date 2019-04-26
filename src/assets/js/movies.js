@@ -63,6 +63,8 @@ function carregaPrimeirosPosts(){
         
 }
 
+
+
 //**Pega quase 'todos' os posts(tem um limite definido na API) disponiveis no servidor */
 function getAllPosts(page){   
     console.log(page) 
@@ -162,6 +164,26 @@ function abrePost(id){
         a()
     }) 
 }
+
+
+function postarComentario(elem){
+  
+    elem.preventDefault()
+    let text=document.querySelector(".user-comment").children[1].value 
+    $(".comentarios").append(`<article id=>
+        <img class="profile-pic other" src="assets/imgs/blackpantherP.jpg" alt="">
+        <p class="nome">Nome</p>
+        <p>${text}</p>
+        <div class="avaliacao-box">
+            <button class="avaliacao"></button>
+            <button class="avaliacao"></button>
+        </div>
+    </article>`)
+    //função para gravar
+    
+    window.location.reload();
+}
+
 function adicionaComentarios(comentarios){
     comentarios.forEach((comment)=>{
         $(".comentarios").append(`<article id="${comment.id}">
